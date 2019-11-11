@@ -11,6 +11,12 @@ body {
     color: #1d1d1d;
 }
 
+.github {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 .container {
     height: 100%;
     display: flex;
