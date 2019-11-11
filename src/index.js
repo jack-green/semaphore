@@ -1,6 +1,6 @@
 import './index.css';
 
-var letters = {
+const letters = {
     'a': [225, 180],
     'b': [270, 180],
     'c': [315, 180],
@@ -30,30 +30,26 @@ var letters = {
     ' ': [135, 225],
 };
 
-var message = '';
-var match = /^\?m=([a-z0-9]+)$/i.exec(document.location.search);
-if (match) {
-    message = atob(match[1]);
-    document.getElementById('message-plain').placeholder = 'Reply...';
-}
-var leftArm = document.getElementById('left-arm');
-var rightArm = document.getElementById('right-arm');
-var current = document.getElementById('current');
-var index = 0;
-var timeout;
+const leftArm = document.getElementById('left-arm');
+const rightArm = document.getElementById('right-arm');
+const current = document.getElementById('current');
+const form = document.getElementById('message-form');
+let message = '';
+let index = 0;
+let timeout;
 
 function setLetter(letter) {
     if (typeof letters[letter] === 'undefined') {
         letter = ' '; // treat unknown chars as spaces
     }
-    var angles = letters[letter];
+    const angles = letters[letter];
     leftArm.style.transform = 'rotate(' + angles[0] + 'deg)';
     rightArm.style.transform = 'rotate(' + angles[1] + 'deg)';
 }
 
 function nextLetter() {
     if (index > message.length) return;
-    var char = message[index];
+    const char = message[index];
     current.innerText = message.substr(0, index+1);
     setLetter(char.toLowerCase());
     index += 1;
@@ -79,19 +75,18 @@ function start() {
     }
 }
 
-function doSemaphore(e) {
-    e.preventDefault();
-    stop();
-    message = input.value;
-    start();
-}
-
-var form = document.getElementById('message-form');
 form.onsubmit = () => {
     // obfuscate message for shenanigans
-    var message = document.getElementById('message-plain').value;
+    const message = document.getElementById('message-plain').value;
     document.getElementById('message-base64').value = btoa(message);
 };
+
+/* Kickoff */
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('m')) {
+    message = urlParams.get('m');
+    message = atob(message);
+}
 
 if (message) {
     start();
