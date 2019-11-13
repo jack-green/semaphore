@@ -1,5 +1,10 @@
 import React from 'react';
-import { Controls, Create, Dude } from './Components';
+import {
+    Controls,
+    Create,
+    Dude,
+    Header,
+} from './Components';
 import styles from './App.module.css';
 
 const speeds = [0.25, 0.5, 1, 2, 5, 10];
@@ -60,6 +65,7 @@ export default class App extends React.Component {
         } = this.state;
         return (
             <div className={styles.app}>
+                <Header message={message} index={0} />
                 <Dude
                     key={`play-${playNumber}`}
                     ref={this.dudeRef}
