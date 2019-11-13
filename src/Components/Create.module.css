@@ -1,0 +1,21 @@
+.create {
+    display: flex;
+    align-items: flex-end;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.create label {
+    font-size: 16px;
+}
+
+.create input {
+    margin-top: 5px;
+}
+
+.create button {
+    margin-left: 20px;
+    background-color: white;
+}

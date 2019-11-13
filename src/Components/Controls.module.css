@@ -1,0 +1,25 @@
+.controls {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.controls > button {
+    margin-left: 20px;
+}
+
+.speed {
+    text-align: center;
+}
+
+.speed div {
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.speed span {
+    display: block;
+    margin: 0 20px;
+    font-size: 24px;
+}
