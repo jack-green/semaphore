@@ -1,40 +1,22 @@
+import letters from './letters';
 import './index.css';
 
-const letters = {
-    'a': [225, 180],
-    'b': [270, 180],
-    'c': [315, 180],
-    'd': [0, 180],
-    'e': [180, 45],
-    'f': [180, 90],
-    'g': [180, 135],
-    'h': [270, 225],
-    'i': [225, 315],
-    'j': [0, 90],
-    'k': [225, 0],
-    'l': [225, 45],
-    'm': [225, 90],
-    'n': [225, 135],
-    'o': [270, 315],
-    'p': [270, 0],
-    'q': [270, 45],
-    'r': [270, 90],
-    's': [270, 135],
-    't': [315, 0],
-    'u': [315, 45],
-    'v': [0, 135],
-    'w': [45, 90],
-    'x': [45, 135],
-    'y': [315, 90],
-    'z': [135, 90],
-    ' ': [135, 225],
-};
 
 const leftArm = document.getElementById('left-arm');
 const rightArm = document.getElementById('right-arm');
 const current = document.getElementById('current');
 const form = document.getElementById('message-form');
-let message = '';
+
+/*
+also needs to be set in index.css
+search for 'Ref: transition delay'
+*/
+const transitionDelay = 500;
+const letterHold = 500;
+const spaceLength = 500;
+const doubleLength = 0;
+
+let queue = [];
 let index = 0;
 let timeout;
 
@@ -48,31 +30,67 @@ function setLetter(letter) {
 }
 
 function nextLetter() {
-    if (index > message.length) return;
-    const char = message[index];
-    current.innerText = message.substr(0, index+1);
-    setLetter(char.toLowerCase());
-    index += 1;
-    if (index < message.length) {
-        timeout = setTimeout(nextLetter, 1000);
+    if (!queue.length) return;
+    const char = queue.shift();
+    let delay = transitionDelay + letterHold;
+    switch (char) {
+        case 'start':
+            setLetter(' ');
+            delay = transitionDelay;
+            break;
+        case 'end':
+            setLetter(' ');
+            break;
+        case 'double':
+            setLetter(' ');
+            delay = transitionDelay + doubleLength;
+            break;
+        case 'numerals':
+            setLetter('numerals');
+            break;
+        case 'alpha':
+            setLetter('j');
+            break;
+        case ' ':
+            delay = transitionDelay + spaceLength;
+            current.innerHTML += '&nbsp;';
+            setLetter('space');
+            break;
+        default:
+            current.innerText += char;
+            setLetter(char.toLowerCase());
     }
-    else {
-        timeout = setTimeout(stop, 1000);
+
+    if (char !== 'end') {
+        timeout = setTimeout(nextLetter, delay);
     }
 }
 
-function stop() {
-    clearTimeout(timeout);
-    setLetter(' ');
-}
-
-function start() {
-    index = 0;
-    current.innerText = '';
-    if (message.length > 0) {
-        setLetter(' ');
-        timeout = setTimeout(nextLetter, 500);
+function start(message) {
+    // generate a queue from the message
+    let lastChar = null;
+    let isNumerals = false;
+    queue.push('start');
+    for(let c = 0; c < message.length; c += 1) {
+        const char = message[c].toLowerCase()
+        if (typeof letters[char] == 'undefined') continue;
+        if (char === lastChar) queue.push('double');
+        lastChar = char;
+        if (/^\d$/.test(char)) {
+            if (!isNumerals) queue.push('numerals');
+            isNumerals = true;
+            queue.push(char);
+        }
+        else {
+            if (isNumerals) queue.push('alpha');
+            isNumerals = false;
+            queue.push(char);
+        }
     }
+    queue.push('end');
+
+    // process queue
+    nextLetter();
 }
 
 form.onsubmit = () => {
@@ -84,10 +102,7 @@ form.onsubmit = () => {
 /* Kickoff */
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('m')) {
-    message = urlParams.get('m');
+    let message = urlParams.get('m');
     message = atob(message);
-}
-
-if (message) {
-    start();
+    start(message);
 }

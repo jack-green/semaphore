@@ -53,10 +53,12 @@ body {
     position: absolute;
     top: 70px;
     left: -10px;
+    /*
+    Ref: transition delay
+    see also transitionDelay in index.js
+    */
     transition: transform 0.5s ease;
-    -webkit-transition: transform 0.5s ease;
     transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
     background-color: red;
 }
 #right-arm {
