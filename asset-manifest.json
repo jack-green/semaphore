@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/semaphore/static/css/main.63da24c8.chunk.css",
+    "main.js": "/semaphore/static/js/main.3d74f1b8.chunk.js",
+    "main.js.map": "/semaphore/static/js/main.3d74f1b8.chunk.js.map",
+    "runtime-main.js": "/semaphore/static/js/runtime-main.37458e67.js",
+    "runtime-main.js.map": "/semaphore/static/js/runtime-main.37458e67.js.map",
+    "static/js/2.8a0aa1a4.chunk.js": "/semaphore/static/js/2.8a0aa1a4.chunk.js",
+    "static/js/2.8a0aa1a4.chunk.js.map": "/semaphore/static/js/2.8a0aa1a4.chunk.js.map",
+    "index.html": "/semaphore/index.html",
+    "precache-manifest.ae8b4795f4023dc2a01346e8b6ca10ee.js": "/semaphore/precache-manifest.ae8b4795f4023dc2a01346e8b6ca10ee.js",
+    "service-worker.js": "/semaphore/service-worker.js",
+    "static/css/main.63da24c8.chunk.css.map": "/semaphore/static/css/main.63da24c8.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.37458e67.js",
+    "static/js/2.8a0aa1a4.chunk.js",
+    "static/css/main.63da24c8.chunk.css",
+    "static/js/main.3d74f1b8.chunk.js"
+  ]
+}
