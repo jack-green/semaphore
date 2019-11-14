@@ -1,4 +1,5 @@
 import React from 'react';
+import GithubCorner from 'react-github-corner';
 import {
     Controls,
     Create,
@@ -90,6 +91,7 @@ export default class App extends React.Component {
                     />
                 ) : null}
                 <Create isReply={!!message} />
+                <GithubCorner href="https://github.com/jack-green/semaphore" />
             </div>
         );
     }
