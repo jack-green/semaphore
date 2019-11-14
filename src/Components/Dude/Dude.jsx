@@ -59,7 +59,7 @@ export default class Dude extends React.Component {
             leftAngle: 0,
             rightAngle: 0,
             speed,
-            speedMultiplier: 1,
+            speedMultiplier: 1 / speed,
             lastDelay: 0,
         };
         this.timeout = null;
@@ -147,12 +147,12 @@ export default class Dude extends React.Component {
                 <div className={styles.dude}>
                     <div className={styles.head} />
                     <div className={styles.body} />
-                    <div className={styles.leftArm} style={{ transform: `rotate(${leftAngle}deg)`, transitionDuration: transitionSpeed * speedMultiplier }}>
+                    <div className={styles.leftArm} style={{ transform: `rotate(${leftAngle}deg)`, transitionDuration: `${transitionSpeed * speedMultiplier}ms` }}>
                         <div className={styles.arm} />
                         <div className={styles.pole} />
                         <div className={styles.flag} />
                     </div>
-                    <div className={styles.rightArm} style={{ transform: `rotate(${rightAngle}deg)`, transitionDuration: transitionSpeed * speedMultiplier }}>
+                    <div className={styles.rightArm} style={{ transform: `rotate(${rightAngle}deg)`, transitionDuration: `${transitionSpeed * speedMultiplier}ms` }}>
                         <div className={styles.arm} />
                         <div className={styles.pole} />
                         <div className={styles.flag} />
