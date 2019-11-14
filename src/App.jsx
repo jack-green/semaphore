@@ -19,7 +19,7 @@ export default class App extends React.Component {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('m')) {
             message = urlParams.get('m');
-            message = atob(message);
+            message = atob(message).substr(0, 17);
         }
 
         this.state = {
@@ -27,6 +27,7 @@ export default class App extends React.Component {
             isPaused: false,
             message,
             playNumber: 1,
+            index: -1,
         };
 
         this.dudeRef = React.createRef();
@@ -53,7 +54,12 @@ export default class App extends React.Component {
 
     replay = () => {
         const { playNumber } = this.state;
-        this.setState({ playNumber: playNumber + 1 });
+        this.setState({ index: -1, playNumber: playNumber + 1 });
+    }
+
+    nextIndex = () => {
+        const { index } = this.state;
+        this.setState({ index: index + 1 });
     }
 
     render() {
@@ -62,15 +68,17 @@ export default class App extends React.Component {
             speed,
             isPaused,
             playNumber,
+            index,
         } = this.state;
         return (
             <div className={styles.app}>
-                <Header message={message} index={0} />
+                <Header message={message} index={index} />
                 <Dude
                     key={`play-${playNumber}`}
                     ref={this.dudeRef}
                     message={message}
                     speed={isPaused ? 0 : speed}
+                    nextIndex={this.nextIndex}
                 />
                 {message ? (
                     <Controls

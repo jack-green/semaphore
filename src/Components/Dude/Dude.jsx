@@ -98,7 +98,7 @@ export default class Dude extends React.Component {
     }
 
     nextLetter = () => {
-        const { speed } = this.props;
+        const { speed, nextIndex } = this.props;
         const { queue, speedMultiplier } = this.state;
         if (speed === 0 || !queue.length) return;
         const char = queue.shift();
@@ -110,6 +110,7 @@ export default class Dude extends React.Component {
             break;
         case 'end':
             this.setLetter(' ');
+            nextIndex(); // move off the end
             break;
         case 'double':
             this.setLetter(' ');
@@ -124,10 +125,12 @@ export default class Dude extends React.Component {
         case ' ':
             delay = transitionSpeed + spaceLength;
             // current.innerHTML += '&nbsp;';
+            nextIndex();
             this.setLetter('space');
             break;
         default:
             // current.innerText += char;
+            nextIndex();
             this.setLetter(char.toLowerCase());
         }
 
@@ -163,6 +166,7 @@ export default class Dude extends React.Component {
 Dude.propTypes = {
     message: PropTypes.string,
     speed: PropTypes.number.isRequired,
+    nextIndex: PropTypes.func.isRequired,
 };
 
 Dude.defaultProps = {
